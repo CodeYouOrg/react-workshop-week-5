@@ -2,11 +2,12 @@ import useFetch from './hooks/useFetch';
 import './App.css';
 import { useEffect, useState } from 'react';
 
-const endpoint = 'https://dog.ceo/api/breeds/image/random';
+const endpoint = 'https://pokeapi.co/api/v2/pokemon/';
 
 function App() {
 	const [skip, setSkip] = useState(true);
-	const { data, error, loading } = useFetch(endpoint, skip);
+	const [name, setName] = useState('ditto');
+	const { data, error, loading } = useFetch(endpoint + name, skip);
 
 	useEffect(() => {
 		setSkip(false);
@@ -19,7 +20,10 @@ function App() {
 			) : error ? (
 				<h2>Error loading data</h2>
 			) : data ? (
-				<img src={data.message} />
+				<div>
+					<h3>{data.name}</h3>
+					<img src={data.sprites.front_default} />
+				</div>
 			) : (
 				<></>
 			)}
